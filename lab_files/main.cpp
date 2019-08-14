@@ -55,13 +55,23 @@ int main(int argc, char *argv[]) {
 		B[i] = rand_double();
 	}
 
+  fprintf(stderr, "testing against reference.\n");
+  for (uint64_t size = 16; size < 64; size += 5) {
+    reference(C, A, B, size);
+    sqmm(D, A, B, size);
+    for (uint64_t i = 0; i < size*size; i += 1) {
+      if (abs(C[i] - D[i]) > 1e-6) {
+        fprintf(stderr, "Bad result from sqmm. C[%ld]=%f D[%ld]=%f.\n", i, C[i], i, D[i]);
+        return 0;
+      }
+    }
+  }
+  fprintf(stderr, "passed testing\n");
+
 	for(uint64_t size = mat_size_small; size <= mat_size_large; size *= 2) { // and for different vector sizes
 		fprintf(stderr, "starting reference code with size: %ld\n", size);
-		reference(C, A, B, size); // compute correct answer
-		// fprintf(stderr, "correct value is %f\n", correct);
-		fprintf(stderr, "starting submitted code with size: %ld\n", size);
 		pristine_machine(); // clear caches, disable turbo boost, reset clock speed
-                if (std::getenv("MHZ") != nullptr) {
+    if (std::getenv("MHZ") != nullptr) {
 			int MHZ = atoi(std::getenv("MHZ"));
 			fprintf(stderr, "MHz set to: %d\n", MHZ);
 			set_cpu_clock_frequency(MHZ);
@@ -70,13 +80,30 @@ int main(int argc, char *argv[]) {
 			ArchLabTimer timer; 
 			timer.attr("matrix_size", size).
 				attr("iterations", iterations).
+				attr("reference", 1).
+				go(); // Start measuring
+			for(uint32_t k = 0; k < iterations; k++) {
+				reference(D, A, B, size);  // Call submitted code
+			}
+		}
+	}
+
+	for(uint64_t size = mat_size_small; size <= mat_size_large; size *= 2) { // and for different vector sizes
+		fprintf(stderr, "starting submitted code with size: %ld\n", size);
+		pristine_machine(); // clear caches, disable turbo boost, reset clock speed
+    if (std::getenv("MHZ") != nullptr) {
+			int MHZ = atoi(std::getenv("MHZ"));
+			fprintf(stderr, "MHz set to: %d\n", MHZ);
+			set_cpu_clock_frequency(MHZ);
+		}
+		{
+			ArchLabTimer timer; 
+			timer.attr("matrix_size", size).
+				attr("iterations", iterations).
+				attr("reference", 0).
 				go(); // Start measuring
 			for(uint32_t k = 0; k < iterations; k++) {
 				sqmm(D, A, B, size);  // Call submitted code
-				// if (r != correct) {
-				// 	fprintf(stderr, "Incorrect result: %f.\n", r);
-				// 	exit(1);
-				// }
 			}
 		}
 	}
