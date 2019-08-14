@@ -77,6 +77,7 @@ int main(int argc, char *argv[]) {
 	for(uint64_t size = mat_size_small; size <= mat_size_large; size *= 2) { // and for different vector sizes
 		fprintf(stderr, "starting reference code with size: %ld\n", size);
 		pristine_machine(); // clear caches, disable turbo boost, reset clock speed
+		clear_tracked_stats();
     if (std::getenv("MHZ") != nullptr) {
 			int MHZ = atoi(std::getenv("MHZ"));
 			fprintf(stderr, "MHz set to: %d\n", MHZ);
@@ -97,6 +98,7 @@ int main(int argc, char *argv[]) {
 	for(uint64_t size = mat_size_small; size <= mat_size_large; size *= 2) { // and for different vector sizes
 		fprintf(stderr, "starting submitted code with size: %ld\n", size);
 		pristine_machine(); // clear caches, disable turbo boost, reset clock speed
+		clear_tracked_stats();
     if (std::getenv("MHZ") != nullptr) {
 			int MHZ = atoi(std::getenv("MHZ"));
 			fprintf(stderr, "MHz set to: %d\n", MHZ);
