@@ -1,4 +1,4 @@
-CMD_LINE_ARGS=--engine papi --stat PAPI_L2_STM --stat rapl:::PACKAGE_ENERGY:PACKAGE0 --mat-small 96 --mat-large 768 --iterations 5
+CMD_LINE_ARGS=--engine papi --stat INSTRUCTIONS_RETIRED --stat BRANCH_INSTRUCTIONS_RETIRED --mat-small 96 --mat-large 768 --iterations 5
 include $(ARCHLAB_ROOT)/compile.make
 
 %.gprof: %.exe gmon.out
