@@ -8,7 +8,7 @@ input_files = ['submission/code.c', 'config']
 run_cmd = ['make', '-C', 'submission']
 clean_cmd = ['make', 'clean']
 env = ['CC','CXX','CFLAGS','CXXFLAGS']
-repo = "https://github.com/NVSL/CSE141pp-Lab-Characterizing-Matrix-Multiply.git"
+repo = "https://github.com/NVSL/CSE141pp-Lab-Loop-Unrolling"
 reference_tag = "314bfbd09ab3a28b446742234851eeef2c29dcba"
 time_limit = 90
 
