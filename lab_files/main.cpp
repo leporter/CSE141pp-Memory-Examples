@@ -53,17 +53,23 @@ int main(int argc, char *argv[]) {
 	for(uint32_t i = 0; i < mat_size_large*mat_size_large; i++) {
 		A[i] = rand_double(); // fill them with random data
 		B[i] = rand_double();
+		C[i] = 0.0;
+		D[i] = 0.0;
 	}
 
   fprintf(stderr, "testing against reference.\n");
   for (uint64_t size = 16; size < 64; size += 5) {
     reference(C, A, B, size);
     sqmm(D, A, B, size);
-    for (uint64_t i = 0; i < size*size; i += 1) {
-      if (abs(C[i] - D[i]) > 1e-6) {
-        fprintf(stderr, "Bad result from sqmm. C[%ld]=%f D[%ld]=%f.\n", i, C[i], i, D[i]);
-        return 0;
-      }
+    for (uint64_t i = 0; i < mat_size_large*mat_size_large; i += 1) {
+      	if (abs(C[i] - D[i]) > 1e-6) {
+		if (i >= size) {
+        		fprintf(stderr, "Bad result from sqmm. C[%ld]=%f D[%ld]=%f. Outside bounds (size=%ld)\n", i, C[i], i, D[i], size);
+		} else {
+        		fprintf(stderr, "Bad result from sqmm. C[%ld]=%f D[%ld]=%f.\n", i, C[i], i, D[i]);
+        		return 0;
+      		}
+	}
     }
   }
   fprintf(stderr, "passed testing\n");
