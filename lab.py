@@ -65,7 +65,7 @@ figures_of_merit=[
         },
     {
         "file": 'submission/code-stats.csv',
-        "field": 'rapl:::PACKAGE_ENERGY:PACKAGE0',
-        "name": 'energy'
+        "field": 'BRANCH_INSTRUCTIONS_RETIRED',
+        "name": 'branches retired'
     }
 ]
