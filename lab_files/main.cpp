@@ -76,41 +76,36 @@ int main(int argc, char * argv[]) {
     }
     fprintf(stderr, "passed testing\n");
 
-    for (uint64_t size = mat_size_small; size <= mat_size_large; size *= 2) { // and for different vector sizes
-        fprintf(stderr, "starting reference code with size: %ld\n", size);
-        pristine_machine(); // clear caches, disable turbo boost, reset clock speed
-        if (std::getenv("MHZ") != nullptr) {
-            int MHZ = atoi(std::getenv("MHZ"));
-            fprintf(stderr, "MHz set to: %d\n", MHZ);
-            set_cpu_clock_frequency(MHZ);
-        } {
-            ArchLabTimer timer;
-            timer.attr("matrix_size", size).
-            attr("iterations", iterations).
-            attr("reference", 1).
-            go(); // Start measuring
-            for (uint32_t k = 0; k < iterations; k++) {
-                reference(D, A, B, size); // Call submitted code
-            }
-        }
-    }
+    pristine_machine(); // clear caches, disable turbo boost, reset clock speed
+    if (std::getenv("MHZ") != nullptr) {
+        int MHZ = atoi(std::getenv("MHZ"));
+        fprintf(stderr, "MHz set to: %d\n", MHZ);
+        set_cpu_clock_frequency(MHZ);
+    } 
 
-    for (uint64_t size = mat_size_small; size <= mat_size_large; size *= 2) { // and for different vector sizes
+    // submission
+    for (uint64_t size = mat_size_large; size >= mat_size_small; size /= 2) { // and for different vector sizes
         fprintf(stderr, "starting submitted code with size: %ld\n", size);
-        pristine_machine(); // clear caches, disable turbo boost, reset clock speed
-        if (std::getenv("MHZ") != nullptr) {
-            int MHZ = atoi(std::getenv("MHZ"));
-            fprintf(stderr, "MHz set to: %d\n", MHZ);
-            set_cpu_clock_frequency(MHZ);
-        } {
-            ArchLabTimer timer;
-            timer.attr("matrix_size", size).
+        ArchLabTimer timer;
+        timer.attr("matrix_size", size).
             attr("iterations", iterations).
             attr("reference", 0).
             go(); // Start measuring
-            for (uint32_t k = 0; k < iterations; k++) {
-                sqmm(D, A, B, size); // Call submitted code
-            }
+        for (uint32_t k = 0; k < iterations; k++) {
+            sqmm(D, A, B, size); // Call submitted code
+        }
+    }
+
+    // reference
+    for (uint64_t size = mat_size_large; size >= mat_size_small; size /= 2) { // and for different vector sizes
+        fprintf(stderr, "starting reference code with size: %ld\n", size);
+        ArchLabTimer timer;
+        timer.attr("matrix_size", size).
+            attr("iterations", iterations).
+            attr("reference", 1).
+            go(); // Start measuring
+        for (uint32_t k = 0; k < iterations; k++) {
+            reference(D, A, B, size); // Call submitted code
         }
     }
 
