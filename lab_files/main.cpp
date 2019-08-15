@@ -67,6 +67,7 @@ int main(int argc, char * argv[]) {
             if (abs(C[i] - D[i]) > 1e-6) {
                 if (i >= size) {
                     fprintf(stderr, "Bad result from sqmm. C[%ld]=%f D[%ld]=%f. Outside bounds (size=%ld)\n", i, C[i], i, D[i], size);
+		    return 0;
                 } else {
                     fprintf(stderr, "Bad result from sqmm. C[%ld]=%f D[%ld]=%f.\n", i, C[i], i, D[i]);
                     return 0;
