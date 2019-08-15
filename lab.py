@@ -4,7 +4,7 @@
  
 lab_name = "Characterizing Matrix Multiply"
 output_files = ['submission/code.out', 'submission/code-stats.csv', 'submission/code.gprof']
-input_files = ['submission/code.c', 'config']
+input_files = ['submission/code.c']
 run_cmd = ['make', '-C', 'submission']
 clean_cmd = ['make', 'clean']
 env = ['CC','CXX','CFLAGS','CXXFLAGS']
