@@ -1,4 +1,3 @@
-// Original author Hung-Wei Tsent
 // Adapted by Leo Porter
 
 #include <algorithm>
