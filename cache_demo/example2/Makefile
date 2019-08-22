@@ -1,6 +1,6 @@
 all: a b
 
-EXTRA_CFLAGS = -O3  -std=c11
+EXTRA_CFLAGS = -O0  -std=c11
 
 a: a.c 
 	gcc $(EXTRA_CFLAGS) a.c -o a

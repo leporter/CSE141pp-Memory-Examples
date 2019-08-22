@@ -1,16 +1,13 @@
-all: mm blockmm object_of_arrays array_of_objects 
+all: a b
 
-mm: mm.c
-	gcc -O3 mm.c -o mm 
+EXTRA_CFLAGS = -O3  -std=c11
 
-blockmm: blockmm.c 
-	gcc -O3 blockmm.c -o blockmm 
+a: a.c 
+	gcc $(EXTRA_CFLAGS) a.c -o a
 
-object_of_arrays: object_of_arrays.c
-	gcc -O3 object_of_arrays.c -o object_of_arrays
-
-array_of_objects: array_of_objects.c
-	gcc -O3 array_of_objects.c -o array_of_objects
+b: b.c
+	gcc $(EXTRA_CFLAGS) b.c -o b
 
 clean:
-		rm -f blockmm mm object_of_arrays array_of_objects  
+		rm -f a 
+		rm -f b 
