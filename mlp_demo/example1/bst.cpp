@@ -28,6 +28,7 @@ int main(int argc, char **argv)
 	cout << *it << endl;
     }
 */
+/*
     for(unsigned k = 0; k < iterations; k++){
 	    int val = std::rand();
 	    auto it = data->find(val);
@@ -35,8 +36,8 @@ int main(int argc, char **argv)
 		    sum++;
 	    }
     }
-
-/* //find using iterator!
+*/
+ //find using iterator!
     for(unsigned k = 0; k < iterations; k++){
         int val = std::rand();
     	for (auto it = data->begin(); it != data->end(); ++it){
@@ -45,7 +46,7 @@ int main(int argc, char **argv)
 	    }
         }
     }
-*/
+
     cout << "sum = " << sum << std::endl;
 
 }
