@@ -1,11 +1,13 @@
-all: arraylist
+all: linear random
 
 EXTRA_CFLAGS = -O3 -std=c++11
 
-arraylist: arraylist.cpp 
-	g++ $(EXTRA_CFLAGS) arraylist.cpp -o arraylist
+linear: linear.cpp 
+	g++ $(EXTRA_CFLAGS) linear.cpp -o linear
+
+random: random.cpp 
+	g++ $(EXTRA_CFLAGS) random.cpp -o random
 
 clean:
-		rm -f arraylist
-		rm -f linkedlist
-		rm -f bst
+		rm -f linear
+		rm -f random

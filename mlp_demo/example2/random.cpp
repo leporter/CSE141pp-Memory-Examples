@@ -15,16 +15,17 @@ int main(int argc, char **argv)
     vector<int>* addr = new vector<int>();
     long long sum = 0;
     int num_blocks = array_size / 64;
-    int iterations = 50;
+    int iterations = 200;
+    unsigned int ops = 0;
 
     // init the data vector
     for (unsigned i = 0; i < array_size; ++i)
         data->push_back(std::rand());
 
-    for(unsigned i = 0; i < array_size; i+=64)
-	addr->push_back((std::rand()%num_blocks)*64);
+    for (unsigned i = 0; i < array_size; i+=64)
+        addr->push_back((std::rand()%num_blocks)*64);
 
-    std::sort (data->begin(), data->end());
+    std::shuffle(addr->begin(), addr->end(), std::default_random_engine(0));
 /*
     for (auto it = addr->begin(); it != addr->end(); ++it){
 	cout << *it << endl;
@@ -36,7 +37,8 @@ int main(int argc, char **argv)
             if (data->at(*it) == val){
                 sum++;
 	    }
+	    ops++;
         }
     }
-    std::cout << "sum = " << sum << std::endl;
+    std::cout << "sum = " << sum << " ops = " << ops << std::endl;
 }
