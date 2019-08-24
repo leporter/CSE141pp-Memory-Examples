@@ -24,7 +24,7 @@ int main(int argc, char **argv)
     for (unsigned i = 0; i < array_size; ++i)
         data->push_back(std::rand());
 
-    for(unsigned i = 0; i < array_size; i+=64)
+    for(unsigned i = 0; i < array_size; i+=16)
 	addr->push_back(i);
 
 //    std::random_shuffle(addr->begin(), addr->end());
