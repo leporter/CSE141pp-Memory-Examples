@@ -14,7 +14,7 @@ int main(int argc, char **argv)
     vector<int>* data = new vector<int>();
     vector<int>* addr = new vector<int>();
     long long sum = 0;
-    int num_blocks = array_size / 64;
+    int num_blocks = array_size / 16;
     int iterations = 200;
     unsigned int ops = 0;
 
@@ -22,8 +22,8 @@ int main(int argc, char **argv)
     for (unsigned i = 0; i < array_size; ++i)
         data->push_back(std::rand());
 
-    for (unsigned i = 0; i < array_size; i+=64)
-        addr->push_back((std::rand()%num_blocks)*64);
+    for (unsigned i = 0; i < array_size; i+=16)
+        addr->push_back((std::rand()%num_blocks)*16);
 
     std::shuffle(addr->begin(), addr->end(), std::default_random_engine(0));
 /*
