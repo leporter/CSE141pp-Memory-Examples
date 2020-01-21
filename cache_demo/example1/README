@@ -1,0 +1,13 @@
+This depends on how smart the compiler is at optimizing away the if statement.  -O0 will constently show the value of not having the if statement.
+
+With -O3, some compilers are smart enough to remove the if statement and just do: sum+= (data[i]>=threshold).  (Or at least based on visual inspection, it removes any branch for the if statement.)
+
+It seems you can confuse the compiler by having an if/else like this:
+            if (data[i] >= threshold){
+                sum++;
+                data[i]+=sum%2;
+            }
+            else{
+                data[i]-=sum%2;
+            }
+

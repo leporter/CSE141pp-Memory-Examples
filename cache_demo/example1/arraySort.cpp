@@ -32,9 +32,11 @@ int main(int argc, char **argv)
         for (unsigned i = 0; i < array_size; ++i) {
             if (data[i] >= threshold){
                 sum++;
-		data[i]--;
-	    }
-	    data[i]++;
+		//data[i]+=sum%2; // add for O3
+	    }/*
+	    else{
+		data[i]-=sum%2;
+	    }*/
         }
     }
     std::cout << "sum = " << sum << std::endl;

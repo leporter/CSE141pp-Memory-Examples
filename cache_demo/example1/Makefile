@@ -1,6 +1,6 @@
 all: arraySort
 
-EXTRA_CFLAGS = -O3
+EXTRA_CFLAGS = -O0
 
 arraySort: arraySort.cpp 
 	g++ $(EXTRA_CFLAGS) arraySort.cpp -o arraySort
